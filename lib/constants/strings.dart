@@ -1,0 +1,11 @@
+const appName = "moneyverss";
+const appVersion = "Version 1.0.0";
+const demoString = 'Lorem Ipsum is simply dummy text of the printing.';
+const userProfile = 'currentUser';
+const accessToken = 'accessToken';
+const loanSubTypeTitle = 'Select sub type of \n your loan requirement';
+const emplymentTypeTitle = 'Select your employment type to start your loan process';
+const annaulIncomeTitle = 'Select your annual income';
+const bankTitle = 'Select you preferred bank';
+const cityTitle = 'Select your current residence city';
+const ageTitle = 'Select your age';

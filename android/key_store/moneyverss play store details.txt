@@ -1,0 +1,10 @@
+play store details
+alias:- moneyverss
+password:- moneyverss2024
+first and last name :-Aamod Fintech
+organizational:-Aamod Fintech
+organization:-Aamod Fintech
+city:-Jaipur
+State:-rajasthan
+country code:-91
+

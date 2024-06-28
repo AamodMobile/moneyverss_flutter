@@ -1,0 +1,98 @@
+name: wireframe
+description: A new Flutter project.
+
+publish_to: 'none'
+
+version: 1.0.0+2
+
+environment:
+  sdk: '>=3.1.2 <4.0.0'
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  pin_code_fields: ^7.4.0
+  carousel_slider: ^4.2.1
+  math_expressions: ^2.4.0
+  syncfusion_flutter_gauges: ^23.1.36
+  image_picker: ^1.0.4
+  image_cropper: ^5.0.0
+  #permission_handler: ^11.0.0
+  flutter_rating_bar: ^4.0.1
+  url_launcher: ^6.1.10
+  flutter_html: ^3.0.0-beta.2
+  shared_preferences: ^2.2.2
+  http: ^1.1.0
+  get: ^4.6.6
+  cached_network_image: ^3.2.3
+  share_plus: ^7.2.2
+  intl: ^0.18.0
+  dropdown_button2: ^2.3.9
+  #audioplayers: ^6.0.0
+  #path_provider: ^2.0.0
+  #flutter_sound: ^8.1.9
+  webview_flutter: ^4.8.0
+
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icons/logo_512.png"
+  min_sdk_android: 21
+
+
+flutter:
+
+  uses-material-design: true
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - assets/
+    - assets/images/
+    - assets/icons/
+    - assets/fonts/
+    # example:
+  fonts:
+    - family: Inter-Bold
+      fonts:
+        - asset: assets/fonts/Inter-Bold.ttf
+
+    - family: Inter-Black
+      fonts:
+        - asset: assets/fonts/Inter-Black.ttf
+
+    - family: Inter-Regular
+      fonts:
+        - asset: assets/fonts/Inter-Regular.ttf
+
+    - family: Inter-Medium
+      fonts:
+        - asset: assets/fonts/Inter-Medium.ttf
+
+    - family: Inter-Light
+      fonts:
+        - asset: assets/fonts/Inter-Light.ttf
+
+    - family: Inter-ExtraBold
+      fonts:
+        - asset: assets/fonts/Inter-ExtraBold.ttf
+
+    - family: Inter-ExtraLight
+      fonts:
+        - asset: assets/fonts/Inter-ExtraLight.ttf
+
+    - family: Inter-SemiBold
+      fonts:
+        - asset: assets/fonts/Inter-SemiBold.ttf
+
+    - family: Inter-Thin
+      fonts:
+        - asset: assets/fonts/Inter-Thin.ttf
