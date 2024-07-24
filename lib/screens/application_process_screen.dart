@@ -73,6 +73,8 @@ class _ApplicationProcessScreenState extends State<ApplicationProcessScreen> {
                         ),
                       ),
                       const Spacer(),
+
+
                       GestureDetector(
                           onTap: () {
                             Get.to(() => MyQueryScreen(leadId: contextCtr.leadDetails.value.id.toString(), applicationNo: contextCtr.leadDetails.value.uniqueId.toString(),));
