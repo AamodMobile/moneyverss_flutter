@@ -40,14 +40,14 @@ class _ProfileViewScreenState extends State<ProfileViewScreen> {
                           Navigator.pop(context);
                         },
                         child: Padding(
-                          padding: EdgeInsets.only(top: 8, bottom: 8, right: 8),
+                          padding: const EdgeInsets.only(top: 8, bottom: 8, right: 8),
                           child: Image.asset(
                             icBack,
                             height: 24,
                             width: 24,
                           ),
                         )),
-                    SizedBox(width: 5,),
+                    const SizedBox(width: 5,),
                     const Text(
                       "Profile",
                       style: TextStyle(
@@ -58,7 +58,7 @@ class _ProfileViewScreenState extends State<ProfileViewScreen> {
                         fontSize: 16,
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     InkWell(
                       onTap: () {
                         Get.to(() => const EditProfileScreen());
@@ -80,7 +80,7 @@ class _ProfileViewScreenState extends State<ProfileViewScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(height: 60,),
+                const SizedBox(height: 60,),
                 Image.asset(imgCommonLogo, height: 25,),
                 SizedBox(
                   height: 160,

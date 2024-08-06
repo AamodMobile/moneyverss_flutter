@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wireframe/constants/constants.dart';
@@ -297,7 +296,7 @@ class _MyQueryScreenState extends State<MyQueryScreen> {
                                                     },
                                                     child: Text(
                                                       viewAll? "Less ":"View All",
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                         fontSize: 10,
                                                         fontFamily: semiBold,
                                                         fontWeight: FontWeight.w600,

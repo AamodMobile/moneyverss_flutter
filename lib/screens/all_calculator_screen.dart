@@ -5,6 +5,7 @@ import 'package:wireframe/screens/calculator_gst_screen.dart';
 import 'package:wireframe/screens/calculator_invest_screen.dart';
 import 'package:wireframe/screens/calculator_loan_screen.dart';
 import 'package:wireframe/screens/calculator_sip_screen.dart';
+import 'package:wireframe/screens/tenure_calculator_screen.dart';
 
 class AllCalculatorScreen extends StatefulWidget {
   const AllCalculatorScreen({super.key});
@@ -24,6 +25,10 @@ class _AllCalculatorScreenState extends State<AllCalculatorScreen> {
       'image': emiCalculator,
     },
     {
+      'title': 'Tenure Calculator',
+      'image': emiCalculator,
+    },
+    {
       'title': 'SIP Calculator',
       'image': emiCalculator,
     },
@@ -35,6 +40,7 @@ class _AllCalculatorScreenState extends State<AllCalculatorScreen> {
       'title': 'Invest Calculator',
       'image': emiCalculator,
     },*/
+
   ];
 
   @override
@@ -102,7 +108,9 @@ class _AllCalculatorScreenState extends State<AllCalculatorScreen> {
                           : myCategory[index]["title"].toString() == "SIP Calculator"
                           ? Navigator.push(context, MaterialPageRoute(builder: (context) => const CalculatorSIPScreen()))
                           : myCategory[index]["title"].toString() == "Invest Calculator"
-                          ?Navigator.push(context, MaterialPageRoute(builder: (context) => const CalculatorInvestScreen()))
+                          ? Navigator.push(context, MaterialPageRoute(builder: (context) => const CalculatorInvestScreen())):
+                           myCategory[index]["title"].toString() == "Tenure Calculator"
+                          ? Navigator.push(context, MaterialPageRoute(builder: (context) => const CalculatorTenureScreen()))
                           : Navigator.push(context, MaterialPageRoute(builder: (context) => const CalculatorGSTScreen()));
                     },
                     child: Container(

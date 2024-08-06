@@ -2,38 +2,23 @@ import 'dart:math' as math;
 
 import 'package:intl/intl.dart';
 import 'package:wireframe/constants/constants.dart';
-import 'package:wireframe/service/api_logs.dart';
 import 'package:wireframe/widget/my_button.dart';
 import 'package:wireframe/widget/text_filled_widget.dart';
 
-class CalculatorEMIScreen extends StatefulWidget {
-  const CalculatorEMIScreen({super.key});
+class CalculatorTenureScreen extends StatefulWidget {
+  const CalculatorTenureScreen({super.key});
 
   @override
-  State<CalculatorEMIScreen> createState() => _CalculatorEMIScreenState();
+  State<CalculatorTenureScreen> createState() => _CalculatorTenureScreenState();
 }
 
-class _CalculatorEMIScreenState extends State<CalculatorEMIScreen> {
-  final List _tenureTypes = ['Month(s)', 'Year(s)'];
-  String _tenureType = "Year(s)";
-  String _emiResult = "";
+class _CalculatorTenureScreenState extends State<CalculatorTenureScreen> {
+  String tenure = "";
   String _totalInterest = "";
   String _totalAmount = "";
-
-  String formatCurrency(double amount) {
-    try {
-      final numberFormatter = NumberFormat("#,##,##0.00", "en_IN");
-      return numberFormatter.format(amount);
-    } catch (e) {
-      return "N/A";
-    }
-  }
-
-  final TextEditingController _principalAmount = TextEditingController();
+  final TextEditingController principalAmount = TextEditingController();
+  final TextEditingController emiAmount = TextEditingController();
   final TextEditingController _interestRate = TextEditingController();
-  final TextEditingController _tenure = TextEditingController();
-
-  bool _switchValue = true;
 
   @override
   Widget build(BuildContext context) {
@@ -44,9 +29,7 @@ class _CalculatorEMIScreenState extends State<CalculatorEMIScreen> {
           appBar: PreferredSize(
             preferredSize: Size(MediaQuery.of(context).size.width, 60),
             child: Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               alignment: Alignment.center,
               decoration: const BoxDecoration(
                 color: whiteColor,
@@ -65,11 +48,9 @@ class _CalculatorEMIScreenState extends State<CalculatorEMIScreen> {
                           width: 24,
                         ),
                       )),
-                  const SizedBox(
-                    width: 5,
-                  ),
+                  const SizedBox(width: 5),
                   const Text(
-                    "EMI Calculator",
+                    "Tenure Calculator",
                     style: TextStyle(
                       color: draKText,
                       fontFamily: medium,
@@ -86,13 +67,11 @@ class _CalculatorEMIScreenState extends State<CalculatorEMIScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Column(
               children: [
-                const SizedBox(
-                  height: 14,
-                ),
+                const SizedBox(height: 14),
                 const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "Enter Principal Amount",
+                    "Principal Amount",
                     style: TextStyle(
                       color: textColorSec,
                       fontFamily: medium,
@@ -104,7 +83,7 @@ class _CalculatorEMIScreenState extends State<CalculatorEMIScreen> {
                 ),
                 const SizedBox(height: 4),
                 MyTextFormField(
-                  controller: _principalAmount,
+                  controller: principalAmount,
                   hint: "Enter Principal Amount",
                   fillColor: Colors.white,
                   obscureText: false,
@@ -112,13 +91,35 @@ class _CalculatorEMIScreenState extends State<CalculatorEMIScreen> {
                   keyboardType: TextInputType.number,
                   border: primaryCl,
                 ),
-                const SizedBox(
-                  height: 14,
-                ),
+                const SizedBox(height: 14),
                 const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "Interest Rate",
+                    "EMI Amount",
+                    style: TextStyle(
+                      color: textColorSec,
+                      fontFamily: medium,
+                      fontWeight: FontWeight.w400,
+                      fontStyle: FontStyle.normal,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 4),
+                MyTextFormField(
+                  controller: emiAmount,
+                  hint: "Enter EMI Amount",
+                  fillColor: Colors.white,
+                  obscureText: false,
+                  readOnly: false,
+                  keyboardType: TextInputType.number,
+                  border: primaryCl,
+                ),
+                const SizedBox(height: 14),
+                const Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Interest Rate (%)",
                     style: TextStyle(
                       color: textColorSec,
                       fontFamily: medium,
@@ -131,116 +132,74 @@ class _CalculatorEMIScreenState extends State<CalculatorEMIScreen> {
                 const SizedBox(height: 4),
                 MyTextFormField(
                   controller: _interestRate,
-                  hint: "Interest Rate",
+                  hint: "Enter Interest Rate",
                   fillColor: Colors.white,
                   keyboardType: TextInputType.number,
                   obscureText: false,
                   readOnly: false,
                   border: primaryCl,
                 ),
-                const SizedBox(
-                  height: 14,
-                ),
-                Row(
-                  children: [
-                    Flexible(
-                      flex: 4,
-                      fit: FlexFit.tight,
-                      child: Column(
-                        children: [
-                          const Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              "Tenure",
-                              style: TextStyle(
-                                color: textColorSec,
-                                fontFamily: medium,
-                                fontWeight: FontWeight.w400,
-                                fontStyle: FontStyle.normal,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          MyTextFormField(
-                            controller: _tenure,
-                            hint: "Tenure",
-                            fillColor: Colors.white,
-                            keyboardType: TextInputType.number,
-                            obscureText: false,
-                            readOnly: false,
-                            border: primaryCl,
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Flexible(
-                        flex: 1,
-                        child: Column(children: [
-                          Text(_tenureType, style: const TextStyle(fontWeight: FontWeight.bold)),
-                          Switch(
-                              activeColor: primaryClNew,
-                              value: _switchValue,
-                              onChanged: (bool value) {
-                                Log.console(value);
-
-                                if (value) {
-                                  _tenureType = _tenureTypes[1];
-                                } else {
-                                  _tenureType = _tenureTypes[0];
-                                }
-
-                                setState(() {
-                                  _switchValue = value;
-                                });
-                              })
-                        ]))
-                  ],
-                ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 24),
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 15),
                   height: 50,
                   width: MediaQuery.of(context).size.width,
                   child: MyButton(
-                      onPressed: _handleCalculation,
-                      color: primaryClNew,
-                      child: const Text(
-                        "Calculate",
-                        style: TextStyle(color: whiteColor, fontFamily: semiBold, fontSize: 18),
-                      )),
+                    onPressed: _handleCalculation,
+                    color: primaryClNew,
+                    child: const Text(
+                      "Calculate",
+                      style: TextStyle(
+                        color: whiteColor,
+                        fontFamily: medium,
+                        fontWeight: FontWeight.w500,
+                        fontStyle: FontStyle.normal,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
                 ),
-                emiResultsWidget(_emiResult, _totalInterest, _totalAmount)
+                emiResultsWidget(tenure, _totalInterest, _totalAmount)
               ],
             ),
           )),
     );
   }
 
-  void _handleCalculation() {
-    double A = 0.0;
-    int P = int.parse(_principalAmount.text);
-    double r = int.parse(_interestRate.text) / 12 / 100;
-    int n = _tenureType == "Year(s)" ? int.parse(_tenure.text) * 12 : int.parse(_tenure.text);
+  String formatCurrency(double amount) {
+    try {
+      final numberFormatter = NumberFormat("#,##,##0.00", "en_IN");
+      return numberFormatter.format(amount);
+    } catch (e) {
+      return "N/A";
+    }
+  }
 
-    A = (P * r * math.pow((1 + r), n) / (math.pow((1 + r), n) - 1));
-    double totalAmountPayable = A * n;
+  void _handleCalculation() {
+    double P = double.parse(principalAmount.text);
+    double E = double.parse(emiAmount.text);
+    double r = double.parse(_interestRate.text) / 12 / 100;
+
+    // Calculate tenure in months
+    int n = (math.log(E / (E - P * r)) / math.log(1 + r)).ceil();
+
+    double totalAmountPayable = E * n;
     double totalInterestPayable = totalAmountPayable - P;
 
-    _emiResult = A.toStringAsFixed(2);
+    tenure = n.toString();
     _totalAmount = totalAmountPayable.toStringAsFixed(2);
     _totalInterest = totalInterestPayable.toStringAsFixed(2);
 
     setState(() {});
   }
 
-  Widget emiResultsWidget(String emiResult, String totalInterest, String totalAmount) {
+  Widget emiResultsWidget(String tenure, String totalInterest, String totalAmount) {
     bool canShow = false;
+    // Convert tenure in months to years
+    double tenureInYears = double.tryParse(tenure) ?? 0.0;
+    String tenureDisplay = tenureInYears > 0 ? '${(tenureInYears / 12).toStringAsFixed(1)} year' : 'N/A';
 
-    if (emiResult.isNotEmpty) {
+    if (tenure.isNotEmpty) {
       canShow = true;
     }
     return canShow
@@ -277,13 +236,53 @@ class _CalculatorEMIScreenState extends State<CalculatorEMIScreen> {
                       children: [
                         const Text(
                           "EMI Per Month",
-                          style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600, color: greyNew, fontFamily: medium),
+                          style: TextStyle(
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w600,
+                            color: greyNew,
+                            fontFamily: medium,
+                          ),
                         ),
                         Text(
-                          "₹ ${formatCurrency(double.parse(emiResult))}",
-                          style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600, fontFamily: semiBold, fontStyle: FontStyle.normal),
+                          "₹ ${formatCurrency(double.parse(emiAmount.text))}",
+                          style: const TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: semiBold,
+                            fontStyle: FontStyle.normal,
+                          ),
                         )
                       ],
+                    )
+                  ],
+                ),
+                const SizedBox(height: 15),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Principal Amount:",
+                      style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600, color: greyNew, fontFamily: medium),
+                    ),
+                    const SizedBox(width: 15),
+                    Text(
+                      "₹ ${formatCurrency(double.parse(principalAmount.text))}",
+                      style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600, fontFamily: semiBold, fontStyle: FontStyle.normal),
+                    )
+                  ],
+                ),
+                const SizedBox(height: 15),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Tenure (In Months):",
+                      style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600, color: greyNew, fontFamily: medium),
+                    ),
+                    const SizedBox(width: 15),
+                    Text(
+                      "$tenure($tenureDisplay)",
+                      style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600, fontFamily: semiBold, fontStyle: FontStyle.normal),
                     )
                   ],
                 ),
@@ -299,9 +298,7 @@ class _CalculatorEMIScreenState extends State<CalculatorEMIScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(
-                            height: 10,
-                          ),
+                          const SizedBox(height: 10),
                           const Text(
                             "Total Interest Payable",
                             style: TextStyle(
@@ -328,16 +325,12 @@ class _CalculatorEMIScreenState extends State<CalculatorEMIScreen> {
                       width: 1,
                       child: VerticalDivider(color: greyNew),
                     ),
-                    const SizedBox(
-                      width: 15,
-                    ),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(
-                            height: 10,
-                          ),
+                          const SizedBox(height: 10),
                           const Text(
                             "Total Amount Payable",
                             style: TextStyle(

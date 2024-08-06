@@ -1,7 +1,8 @@
-import 'package:wireframe/constants/constants.dart';
-import 'package:wireframe/widget/my_button.dart';
 import 'dart:math' as math;
 
+import 'package:intl/intl.dart';
+import 'package:wireframe/constants/constants.dart';
+import 'package:wireframe/widget/my_button.dart';
 import 'package:wireframe/widget/text_filled_widget.dart';
 
 class CalculatorLoanScreen extends StatefulWidget {
@@ -12,27 +13,27 @@ class CalculatorLoanScreen extends StatefulWidget {
 }
 
 class _CalculatorLoanScreenState extends State<CalculatorLoanScreen> {
-  String _emiResult = "";
-  String moths = "";
-  double emi = 0.0;
-  final TextEditingController _principalAmount = TextEditingController();
+  String principalAmount = "";
+  String _totalInterest = "";
+  String _totalAmount = "";
+  final TextEditingController emiAmount = TextEditingController();
   final TextEditingController _interestRate = TextEditingController();
-  final TextEditingController year = TextEditingController();
-  final TextEditingController month = TextEditingController();
+  final TextEditingController _tenure = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
           backgroundColor: homeBgCl,
+          resizeToAvoidBottomInset: false,
           appBar: PreferredSize(
             preferredSize: Size(MediaQuery.of(context).size.width, 60),
             child: Container(
-              padding:
-              const EdgeInsets.symmetric(horizontal: 16,),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               alignment: Alignment.center,
               decoration: const BoxDecoration(
-                color: whiteColor,),
+                color: whiteColor,
+              ),
               child: Row(
                 children: [
                   InkWell(
@@ -40,14 +41,14 @@ class _CalculatorLoanScreenState extends State<CalculatorLoanScreen> {
                         Navigator.pop(context);
                       },
                       child: Padding(
-                        padding: EdgeInsets.only(top: 8, bottom: 8, right: 8),
+                        padding: const EdgeInsets.only(top: 8, bottom: 8, right: 8),
                         child: Image.asset(
                           icBack,
                           height: 24,
                           width: 24,
                         ),
                       )),
-                  SizedBox(width: 5,),
+                  const SizedBox(width: 5),
                   const Text(
                     "Loan Calculator",
                     style: TextStyle(
@@ -66,13 +67,11 @@ class _CalculatorLoanScreenState extends State<CalculatorLoanScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Column(
               children: [
-                const SizedBox(
-                  height: 14,
-                ),
+                const SizedBox(height: 14),
                 const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "Loan EMI",
+                    "EMI Amount",
                     style: TextStyle(
                       color: textColorSec,
                       fontFamily: medium,
@@ -84,21 +83,19 @@ class _CalculatorLoanScreenState extends State<CalculatorLoanScreen> {
                 ),
                 const SizedBox(height: 4),
                 MyTextFormField(
-                  controller: _principalAmount,
-                  hint: "Loan EMI",
+                  controller: emiAmount,
+                  hint: "Enter EMI Amount",
                   fillColor: Colors.white,
                   obscureText: false,
                   readOnly: false,
                   keyboardType: TextInputType.number,
                   border: primaryCl,
                 ),
-                const SizedBox(
-                  height: 14,
-                ),
+                const SizedBox(height: 14),
                 const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "Interest %",
+                    "Interest Rate (%)",
                     style: TextStyle(
                       color: textColorSec,
                       fontFamily: medium,
@@ -111,83 +108,42 @@ class _CalculatorLoanScreenState extends State<CalculatorLoanScreen> {
                 const SizedBox(height: 4),
                 MyTextFormField(
                   controller: _interestRate,
-                  hint: "Interest %",
+                  hint: "Enter Interest Rate",
                   fillColor: Colors.white,
                   keyboardType: TextInputType.number,
                   obscureText: false,
                   readOnly: false,
                   border: primaryCl,
                 ),
-                const SizedBox(
-                  height: 14,
+                const SizedBox(height: 14),
+                const Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Loan Tenure (Years)",
+                    style: TextStyle(
+                      color: textColorSec,
+                      fontFamily: medium,
+                      fontWeight: FontWeight.w400,
+                      fontStyle: FontStyle.normal,
+                      fontSize: 12,
+                    ),
+                  ),
                 ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        children: [
-                          const Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              "Year",
-                              style: TextStyle(
-                                color: textColorSec,
-                                fontFamily: medium,
-                                fontWeight: FontWeight.w400,
-                                fontStyle: FontStyle.normal,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          MyTextFormField(
-                            controller: year,
-                            hint: "Year",
-                            fillColor: Colors.white,
-                            keyboardType: TextInputType.number,
-                            obscureText: false,
-                            readOnly: false,
-                            border: primaryCl,
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Column(
-                        children: [
-                          const Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              "Month",
-                              style: TextStyle(
-                                color: textColorSec,
-                                fontFamily: medium,
-                                fontWeight: FontWeight.w400,
-                                fontStyle: FontStyle.normal,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          MyTextFormField(
-                            controller: month,
-                            hint: "Month",
-                            fillColor: Colors.white,
-                            keyboardType: TextInputType.number,
-                            obscureText: false,
-                            readOnly: false,
-                            border: primaryCl,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                const SizedBox(height: 4),
+                MyTextFormField(
+                  controller: _tenure,
+                  hint: "Enter Loan Tenure",
+                  fillColor: Colors.white,
+                  keyboardType: TextInputType.number,
+                  obscureText: false,
+                  readOnly: false,
+                  border: primaryCl,
                 ),
                 const SizedBox(height: 24),
-                SizedBox(
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 15),
                   height: 50,
-                  width: 200,
+                  width: MediaQuery.of(context).size.width,
                   child: MyButton(
                     onPressed: _handleCalculation,
                     color: primaryClNew,
@@ -203,45 +159,182 @@ class _CalculatorLoanScreenState extends State<CalculatorLoanScreen> {
                     ),
                   ),
                 ),
-                emiResultsWidget(_emiResult.toString())
+                emiResultsWidget(principalAmount, _totalInterest, _totalAmount)
               ],
             ),
           )),
     );
   }
-
+  String formatCurrency(double amount) {
+    try {
+      final numberFormatter = NumberFormat("#,##,##0.00", "en_IN");
+      return numberFormatter.format(amount);
+    } catch (e) {
+      return "N/A";
+    }
+  }
   void _handleCalculation() {
-    //  Amortization
-    //  A = Payment amount per period
-    //  P = Initial Practical (loan amount)
-    //  r = interest rate
-    //  n = total number of payments or periods
+    double E = double.parse(emiAmount.text);
+    double r = double.parse(_interestRate.text) / 12 / 100;
+    int n = int.parse(_tenure.text) * 12;
 
-    double A = 0.0;
-    int P = int.parse(_principalAmount.text);
-    double r = int.parse(_interestRate.text) / 12 / 100;
-    int n = int.parse(year.text) * 12 + int.parse(month.text);
-    moths = n.toString();
-    A = (P * r * math.pow((1 + r), n) / (math.pow((1 + r), n) - 1));
-    _emiResult = A.toStringAsFixed(2);
+    double P = (E * (math.pow((1 + r), n) - 1)) / (r * math.pow((1 + r), n));
+    double totalAmountPayable = E * n;
+    double totalInterestPayable = totalAmountPayable - P;
+
+    principalAmount = P.toStringAsFixed(2);
+    _totalAmount = totalAmountPayable.toStringAsFixed(2);
+    _totalInterest = totalInterestPayable.toStringAsFixed(2);
+
     setState(() {});
   }
 
-  Widget emiResultsWidget(emiResult) {
+  Widget emiResultsWidget(String principalAmount, String totalInterest, String totalAmount) {
     bool canShow = false;
-    String emiResult0 = emiResult;
 
-    if (emiResult0.isNotEmpty) {
+    if (principalAmount.isNotEmpty) {
       canShow = true;
     }
-    return Container(
-        margin: const EdgeInsets.only(top: 40.0),
-        child: canShow
-            ? Column(children: [
-                Text("Your Monthly $moths", style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
-                const Text("Your Monthly EMI is", style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
-                Text(emiResult0, style: const TextStyle(fontSize: 50.0, fontWeight: FontWeight.bold))
-              ])
-            : Container());
+    return canShow
+        ? Container(
+            padding: const EdgeInsets.all(15),
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(color: borderNew, width: 0.4),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            margin: const EdgeInsets.only(top: 40.0),
+            child: Column(
+              children: [
+                const SizedBox(height: 15),
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: const BoxDecoration(
+                        color: homeBgCl,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Image.asset(
+                        emiCalculator,
+                        color: primaryClNew,
+                        height: 20,
+                        width: 20,
+                      ),
+                    ),
+                    const SizedBox(width: 25),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "EMI Per Month",
+                          style: TextStyle(
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w600,
+                            color: greyNew,
+                            fontFamily: medium,
+                          ),
+                        ),
+                        Text(
+                          "₹ ${formatCurrency(double.parse(emiAmount.text))}",
+                          style: const TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: semiBold,
+                            fontStyle: FontStyle.normal,
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+                const SizedBox(height: 15),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Principal Amount  :",
+                      style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600, color: greyNew, fontFamily: medium),
+                    ),
+                    const SizedBox(width: 15),
+                    Text(
+                      "₹ ${formatCurrency(double.parse(principalAmount))}",
+                      style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600, fontFamily: semiBold, fontStyle: FontStyle.normal),
+                    )
+                  ],
+                ),
+                const SizedBox(height: 15),
+                const Divider(
+                  color: greyNew,
+                  height: 2,
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 10),
+                          const Text(
+                            "Total Interest Payable",
+                            style: TextStyle(
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.w600,
+                              color: greyNew,
+                              fontFamily: medium,
+                            ),
+                          ),
+                          Text(
+                            "₹ ${formatCurrency(double.parse(totalInterest))}",
+                            style: const TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: semiBold,
+                              fontStyle: FontStyle.normal,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 60,
+                      width: 1,
+                      child: VerticalDivider(color: greyNew),
+                    ),
+                    const SizedBox(width: 15),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 10),
+                          const Text(
+                            "Total Amount Payable",
+                            style: TextStyle(
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.w600,
+                              color: greyNew,
+                              fontFamily: medium,
+                            ),
+                          ),
+                          Text(
+                            "₹ ${formatCurrency(double.parse(totalAmount))}",
+                            style: const TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: semiBold,
+                              fontStyle: FontStyle.normal,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          )
+        : Container();
   }
 }

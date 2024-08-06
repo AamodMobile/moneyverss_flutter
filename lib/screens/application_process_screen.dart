@@ -1,11 +1,9 @@
 import 'dart:io';
 
 import 'package:get/get.dart';
-
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:wireframe/constants/constants.dart';
-
 import 'package:wireframe/controllers/lead_list_controller.dart';
 import 'package:wireframe/screens/document_list_screen/document_list_screen.dart';
 import 'package:wireframe/screens/query_with_expert/my_query_screen.dart';
@@ -74,14 +72,18 @@ class _ApplicationProcessScreenState extends State<ApplicationProcessScreen> {
                       ),
                       const Spacer(),
                       GestureDetector(
-                          onTap: () {
-                            Get.to(() => MyQueryScreen(leadId: contextCtr.leadDetails.value.id.toString(), applicationNo: contextCtr.leadDetails.value.uniqueId.toString(),));
-                          },
-                          child: Image.asset(
-                            querySupport,
-                            height: 24,
-                            width: 24,
-                          ))
+                        onTap: () {
+                          Get.to(() => MyQueryScreen(
+                                leadId: contextCtr.leadDetails.value.id.toString(),
+                                applicationNo: contextCtr.leadDetails.value.uniqueId.toString(),
+                              ));
+                        },
+                        child: Image.asset(
+                          querySupport,
+                          height: 24,
+                          width: 24,
+                        ),
+                      )
                     ],
                   ),
                 ),

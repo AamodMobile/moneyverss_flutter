@@ -76,7 +76,7 @@ class _SupportScreenState extends State<SupportScreen> {
               const SizedBox(
                 height: 40,
               ),
-              Text(
+              const Text(
                 "Help & Support",
                 style: TextStyle(
                     color: mainColor,
@@ -142,11 +142,11 @@ class _SupportScreenState extends State<SupportScreen> {
                               const SizedBox(
                                 height: 20,
                               ),
-                              Text(
+                              const Text(
                                 "On Chat",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                    color: const Color(0xFF6D6D6D),
+                                    color: Color(0xFF6D6D6D),
                                     fontFamily: medium,
                                     fontWeight: FontWeight.w600,
                                     fontStyle: FontStyle.normal,
@@ -155,11 +155,11 @@ class _SupportScreenState extends State<SupportScreen> {
                               const SizedBox(
                                 height: 10,
                               ),
-                              Text(
+                              const Text(
                                 "Whatsapp",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                    color: const Color(0xFF009806),
+                                    color: Color(0xFF009806),
                                     fontFamily: semiBold,
                                     fontWeight: FontWeight.w600,
                                     fontStyle: FontStyle.normal,
@@ -212,11 +212,11 @@ class _SupportScreenState extends State<SupportScreen> {
                               const SizedBox(
                                 height: 20,
                               ),
-                              Text(
+                              const Text(
                                 "On Chat",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                    color: const Color(0xFF6D6D6D),
+                                    color: Color(0xFF6D6D6D),
                                     fontFamily: medium,
                                     fontWeight: FontWeight.w600,
                                     fontStyle: FontStyle.normal,
@@ -225,11 +225,11 @@ class _SupportScreenState extends State<SupportScreen> {
                               const SizedBox(
                                 height: 10,
                               ),
-                              Text(
+                              const Text(
                                 "Email",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                    color: const Color(0xFFFF5151),
+                                    color: Color(0xFFFF5151),
                                     fontFamily: semiBold,
                                     fontWeight: FontWeight.w600,
                                     fontStyle: FontStyle.normal,
